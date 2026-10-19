@@ -58,10 +58,13 @@ Window {
         onActivated: ring.toggle()
     }
 
-    // Dismiss if another app gains focus while the wheel is open.
+    // Dismiss if another app gains focus while the wheel is open. Ignore the
+    // ring's own activation: KWin 6.8 reports it, which would close it at once.
     Connections {
         target: Workspace
-        function onWindowActivated() { if (ring.visible) ring.hide(); }
+        function onWindowActivated(window) {
+            if (ring.visible && !(window && window.caption === ring.title)) ring.hide();
+        }
     }
 
     Item {
