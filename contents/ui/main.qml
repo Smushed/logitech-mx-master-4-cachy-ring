@@ -1,12 +1,15 @@
 import QtQuick
-import QtQuick.Window
+import QtQuick.Window as QtWindow
 import org.kde.kwin
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.kicker as Kicker
 import "apps.js" as Apps
 import "logic.js" as Logic
 
-Window {
+// Qualified: KWin 6.8's org.kde.kwin module also exports a Window type that
+// clashes with QtQuick.Window's whichever order they are imported in. It only
+// fails when this script is the first to resolve the name, e.g. at login.
+QtWindow.Window {
     id: ring
     title: "MX App Ring"
     width: 440
